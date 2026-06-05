@@ -419,11 +419,11 @@ async createOpportunity(opportunity: CreateOpportunityInput): Promise<Opportunit
           }
           stage
           closeDate
-          dateProchainAction
-          prochaineAction
-          nbRelances
-          canalAcquisition
-          etat
+          dateProchaineAction
+prochaineAction
+nbDeRelances
+canalAcquisition
+service
           service
           companyId
           pointOfContactId
@@ -479,12 +479,11 @@ async createOpportunity(opportunity: CreateOpportunityInput): Promise<Opportunit
           }
           stage
           closeDate
-          dateProchainAction
-          prochaineAction
-          nbRelances
-          canalAcquisition
-          etat
-          service
+          dateProchaineAction
+prochaineAction
+nbDeRelances
+canalAcquisition
+service
           companyId
           pointOfContactId
           createdAt
