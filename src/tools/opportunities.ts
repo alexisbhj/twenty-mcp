@@ -3,38 +3,48 @@ import { z } from 'zod';
 import { TwentyClient } from '../client/twenty-client.js';
 
 export function registerOpportunityTools(server: McpServer, client: TwentyClient) {
-  server.tool(
+    server.tool(
     'create_opportunity',
     'Create a new opportunity/deal in Twenty CRM',
     {
       name: z.string().describe('Opportunity name'),
       amount: z.object({
-        value: z.number().describe('Amount in currency units (e.g., 1000.50 for $1,000.50)'),
-        currency: z.string().default('USD').describe('Currency code (e.g., USD, EUR)')
-      }).optional().describe('Deal amount'),
-      stage: z.string().optional().describe('Sales stage (e.g., NEW, SCREENING, MEETING, PROPOSAL, CUSTOMER)'),
-      closeDate: z.string().optional().describe('Expected close date (ISO 8601 format)'),
-      companyId: z.string().optional().describe('ID of associated company'),
-      pointOfContactId: z.string().optional().describe('ID of main contact person')
+        value: z.number(),
+        currency: z.string().default('EUR')
+      }).optional(),
+      stage: z.string().optional(),
+      closeDate: z.string().optional(),
+      dateProchaineAction: z.string().optional().describe('Date du prochain contact (ISO 8601)'),
+      prochaineAction: z.string().optional().describe('Type de prochaine action (appel, email, RDV...)'),
+      nbDeRelances: z.number().optional().describe('Nombre de relances effectuées'),
+      canalAcquisition: z.string().optional(),
+      service: z.string().optional(),
+      companyId: z.string().optional(),
+      pointOfContactId: z.string().optional()
     },
-    async ({ name, amount, stage, closeDate, companyId, pointOfContactId }) => {
+    async ({ name, amount, stage, closeDate, dateProchaineAction, prochaineAction, nbDeRelances, canalAcquisition, service, companyId, pointOfContactId }) => {
       try {
         const opportunityData: any = { name };
-        
+
         if (amount) {
           opportunityData.amount = {
             amountMicros: Math.round(amount.value * 1000000),
             currencyCode: amount.currency
           };
         }
-        
+
         if (stage) opportunityData.stage = stage;
         if (closeDate) opportunityData.closeDate = closeDate;
+        if (dateProchaineAction) opportunityData.dateProchaineAction = dateProchaineAction;
+        if (prochaineAction) opportunityData.prochaineAction = prochaineAction;
+        if (nbDeRelances !== undefined) opportunityData.nbDeRelances = nbDeRelances;
+        if (canalAcquisition) opportunityData.canalAcquisition = canalAcquisition;
+        if (service) opportunityData.service = service;
         if (companyId) opportunityData.companyId = companyId;
         if (pointOfContactId) opportunityData.pointOfContactId = pointOfContactId;
-        
+
         const opportunity = await client.createOpportunity(opportunityData);
-        
+
         return {
           content: [{
             type: 'text',
@@ -44,15 +54,13 @@ export function registerOpportunityTools(server: McpServer, client: TwentyClient
         };
       } catch (error: any) {
         return {
-          content: [{
-            type: 'text',
-            text: `Failed to create opportunity: ${error.message}`
-          }],
+          content: [{ type: 'text', text: `Failed to create opportunity: ${error.message}` }],
           isError: true
         };
       }
     }
   );
+
 
   server.tool(
     'get_opportunity',
@@ -102,25 +110,30 @@ Contact ID: ${opportunity.pointOfContactId || 'None'}`
     }
   );
 
-  server.tool(
+    server.tool(
     'update_opportunity',
     'Update an existing opportunity in Twenty CRM',
     {
       id: z.string().describe('Opportunity ID to update'),
-      name: z.string().optional().describe('Opportunity name'),
+      name: z.string().optional(),
       amount: z.object({
-        value: z.number().describe('Amount in currency units'),
-        currency: z.string().describe('Currency code')
-      }).optional().describe('Deal amount'),
-      stage: z.string().optional().describe('Sales stage'),
-      closeDate: z.string().optional().describe('Expected close date'),
-      companyId: z.string().optional().describe('ID of associated company'),
-      pointOfContactId: z.string().optional().describe('ID of main contact person')
+        value: z.number(),
+        currency: z.string()
+      }).optional(),
+      stage: z.string().optional(),
+      closeDate: z.string().optional(),
+      dateProchaineAction: z.string().optional().describe('Date du prochain contact (ISO 8601)'),
+      prochaineAction: z.string().optional().describe('Type de prochaine action (appel, email, RDV...)'),
+      nbDeRelances: z.number().optional().describe('Nombre de relances effectuées'),
+      canalAcquisition: z.string().optional(),
+      service: z.string().optional(),
+      companyId: z.string().optional(),
+      pointOfContactId: z.string().optional()
     },
     async (input) => {
       try {
         const updateData: any = {};
-        
+
         if (input.name) updateData.name = input.name;
         if (input.amount) {
           updateData.amount = {
@@ -130,14 +143,19 @@ Contact ID: ${opportunity.pointOfContactId || 'None'}`
         }
         if (input.stage) updateData.stage = input.stage;
         if (input.closeDate) updateData.closeDate = input.closeDate;
+        if (input.dateProchaineAction) updateData.dateProchaineAction = input.dateProchaineAction;
+        if (input.prochaineAction) updateData.prochaineAction = input.prochaineAction;
+        if (input.nbDeRelances !== undefined) updateData.nbDeRelances = input.nbDeRelances;
+        if (input.canalAcquisition) updateData.canalAcquisition = input.canalAcquisition;
+        if (input.service) updateData.service = input.service;
         if (input.companyId) updateData.companyId = input.companyId;
         if (input.pointOfContactId) updateData.pointOfContactId = input.pointOfContactId;
-        
+
         const opportunity = await client.updateOpportunity({
           id: input.id,
           ...updateData
         });
-        
+
         return {
           content: [{
             type: 'text',
@@ -147,15 +165,13 @@ Contact ID: ${opportunity.pointOfContactId || 'None'}`
         };
       } catch (error: any) {
         return {
-          content: [{
-            type: 'text',
-            text: `Failed to update opportunity: ${error.message}`
-          }],
+          content: [{ type: 'text', text: `Failed to update opportunity: ${error.message}` }],
           isError: true
         };
       }
     }
   );
+
 
   server.tool(
     'search_opportunities',
