@@ -7,12 +7,11 @@ export interface Opportunity {
   };
   stage?: string;
   closeDate?: string;
-  dateProchainAction?: string;
-  prochaineAction?: string;
-  nbRelances?: number;
-  canalAcquisition?: string;
-  etat?: string;
-  service?: string;
+  dateProchaineAction?: string;
+prochaineAction?: string;
+nbDeRelances?: number;
+canalAcquisition?: string;
+service?: string;
   companyId?: string;
   pointOfContactId?: string;
   createdAt: string;
@@ -27,12 +26,11 @@ export interface CreateOpportunityInput {
   };
   stage?: string;
   closeDate?: string;
-  dateProchainAction?: string;
-  prochaineAction?: string;
-  nbRelances?: number;
-  canalAcquisition?: string;
-  etat?: string;
-  service?: string;
+  dateProchaineAction?: string;
+prochaineAction?: string;
+nbDeRelances?: number;
+canalAcquisition?: string;
+service?: string;
   companyId?: string;
   pointOfContactId?: string;
 }
@@ -47,12 +45,11 @@ export interface UpdateOpportunityInput {
   };
   stage?: string;
   closeDate?: string;
-  dateProchainAction?: string;
-  prochaineAction?: string;
-  nbRelances?: number;
-  canalAcquisition?: string;
-  etat?: string;
-  service?: string;
+  dateProchaineAction?: string;
+prochaineAction?: string;
+nbDeRelances?: number;
+canalAcquisition?: string;
+service?: string;
   companyId?: string;
   pointOfContactId?: string;
 }
