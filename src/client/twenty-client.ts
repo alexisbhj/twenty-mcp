@@ -407,7 +407,7 @@ export class TwentyClient {
     return result.createNote;
   }
 
-  async createOpportunity(opportunity: CreateOpportunityInput): Promise<Opportunity> {
+async createOpportunity(opportunity: CreateOpportunityInput): Promise<Opportunity> {
     const mutation = `
       mutation CreateOpportunity($data: OpportunityCreateInput!) {
         createOpportunity(data: $data) {
@@ -419,6 +419,12 @@ export class TwentyClient {
           }
           stage
           closeDate
+          dateProchainAction
+          prochaineAction
+          nbRelances
+          canalAcquisition
+          etat
+          service
           companyId
           pointOfContactId
           createdAt
@@ -426,6 +432,7 @@ export class TwentyClient {
         }
       }
     `;
+
 
     const result = await this.client.request(mutation, { data: opportunity }) as { createOpportunity: Opportunity };
     return result.createOpportunity;
