@@ -27,9 +27,16 @@ export interface CreateOpportunityInput {
   };
   stage?: string;
   closeDate?: string;
+  dateProchainAction?: string;
+  prochaineAction?: string;
+  nbRelances?: number;
+  canalAcquisition?: string;
+  etat?: string;
+  service?: string;
   companyId?: string;
   pointOfContactId?: string;
 }
+
 
 export interface UpdateOpportunityInput {
   id: string;
