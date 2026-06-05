@@ -486,8 +486,9 @@ export class TwentyClient {
 
   async searchOpportunities(input: SearchOpportunitiesInput): Promise<Opportunity[]> {
     const query = `
-      query SearchOpportunities($filter: OpportunityFilterInput, $first: Int, $skip: Int) {
-        opportunities(filter: $filter, first: $first, skip: $skip) {
+      query SearchOpportunities($filter: OpportunityFilterInput, $first: Int) {
+  opportunities(filter: $filter, first: $first) {
+
           edges {
             node {
               id
