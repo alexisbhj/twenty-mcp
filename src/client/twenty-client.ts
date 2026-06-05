@@ -408,7 +408,7 @@ export class TwentyClient {
   }
 
 async createOpportunity(opportunity: CreateOpportunityInput): Promise<Opportunity> {
-    const mutation = `
+     const mutation = `
       mutation CreateOpportunity($data: OpportunityCreateInput!) {
         createOpportunity(data: $data) {
           id
@@ -420,10 +420,9 @@ async createOpportunity(opportunity: CreateOpportunityInput): Promise<Opportunit
           stage
           closeDate
           dateProchaineAction
-prochaineAction
-nbDeRelances
-canalAcquisition
-service
+          prochaineAction
+          nbDeRelances
+          canalAcquisition
           service
           companyId
           pointOfContactId
