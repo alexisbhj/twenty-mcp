@@ -7,6 +7,12 @@ export interface Opportunity {
   };
   stage?: string;
   closeDate?: string;
+  dateProchainAction?: string;
+  prochaineAction?: string;
+  nbRelances?: number;
+  canalAcquisition?: string;
+  etat?: string;
+  service?: string;
   companyId?: string;
   pointOfContactId?: string;
   createdAt: string;
@@ -34,6 +40,12 @@ export interface UpdateOpportunityInput {
   };
   stage?: string;
   closeDate?: string;
+  dateProchainAction?: string;
+  prochaineAction?: string;
+  nbRelances?: number;
+  canalAcquisition?: string;
+  etat?: string;
+  service?: string;
   companyId?: string;
   pointOfContactId?: string;
 }
@@ -47,7 +59,6 @@ export interface SearchOpportunitiesInput {
   endDate?: string;
   companyId?: string;
   limit?: number;
-  offset?: number;
 }
 
 export interface OpportunityStage {
