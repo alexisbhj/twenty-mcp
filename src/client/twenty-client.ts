@@ -472,6 +472,12 @@ export class TwentyClient {
           }
           stage
           closeDate
+          dateProchainAction
+          prochaineAction
+          nbRelances
+          canalAcquisition
+          etat
+          service
           companyId
           pointOfContactId
           createdAt
